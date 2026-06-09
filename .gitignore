@@ -5,6 +5,23 @@
 ## User settings
 xcuserdata/
 
+# macOS user settings (including Desktop Services Store)
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Xcode user settings and cache
+xcuserdata/
+DerivedData/
+*.xcworkspace
+!default.xcworkspace
+
+# Swift Package Manager artifacts
+.build/
+.swiftpm/
+Packages/
+Package.resolved
+
 ## Obj-C/Swift specific
 *.hmap
 
