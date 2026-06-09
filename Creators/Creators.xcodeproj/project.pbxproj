@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8492EF792FD8A33D0053B995 /* FourCreators.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8492EF772FD8A33D0053B995 /* FourCreators.xcdatamodeld */; };
 		9FAA74CC2FD90B8600AC806E /* CreatorsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAA74CB2FD90B8600AC806E /* CreatorsApp.swift */; };
 		9FAA74CE2FD90B8600AC806E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAA74CD2FD90B8600AC806E /* ContentView.swift */; };
 		9FAA74D02FD90B8900AC806E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA74CF2FD90B8900AC806E /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8492EF782FD8A33D0053B995 /* FourCreators.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FourCreators.xcdatamodel; sourceTree = "<group>"; };
 		9FAA74C82FD90B8600AC806E /* Creators.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Creators.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FAA74CB2FD90B8600AC806E /* CreatorsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatorsApp.swift; sourceTree = "<group>"; };
 		9FAA74CD2FD90B8600AC806E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -32,6 +34,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8492EF732FD8A0610053B995 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		8492EF742FD8A06A0053B995 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		8492EF752FD8A0710053B995 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		8492EF762FD8A3000053B995 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				8492EF772FD8A33D0053B995 /* FourCreators.xcdatamodeld */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
 		9FAA74BF2FD90B8600AC806E = {
 			isa = PBXGroup;
 			children = (
@@ -51,6 +82,10 @@
 		9FAA74CA2FD90B8600AC806E /* Creators */ = {
 			isa = PBXGroup;
 			children = (
+				8492EF762FD8A3000053B995 /* CoreData */,
+				8492EF752FD8A0710053B995 /* ViewModel */,
+				8492EF742FD8A06A0053B995 /* Views */,
+				8492EF732FD8A0610053B995 /* Models */,
 				9FAA74CB2FD90B8600AC806E /* CreatorsApp.swift */,
 				9FAA74CD2FD90B8600AC806E /* ContentView.swift */,
 				9FAA74CF2FD90B8900AC806E /* Assets.xcassets */,
@@ -137,6 +172,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8492EF792FD8A33D0053B995 /* FourCreators.xcdatamodeld in Sources */,
 				9FAA74CE2FD90B8600AC806E /* ContentView.swift in Sources */,
 				9FAA74CC2FD90B8600AC806E /* CreatorsApp.swift in Sources */,
 			);
@@ -339,6 +375,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		8492EF772FD8A33D0053B995 /* FourCreators.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				8492EF782FD8A33D0053B995 /* FourCreators.xcdatamodel */,
+			);
+			currentVersion = 8492EF782FD8A33D0053B995 /* FourCreators.xcdatamodel */;
+			path = FourCreators.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 9FAA74C02FD90B8600AC806E /* Project object */;
 }
