@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8461939B2FD9C67B00642AD1 /* FolderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8461939A2FD9C67B00642AD1 /* FolderListView.swift */; };
+		8461939D2FD9C93C00642AD1 /* FolderFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8461939C2FD9C93C00642AD1 /* FolderFormView.swift */; };
 		8492EF792FD8A33D0053B995 /* FourCreators.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8492EF772FD8A33D0053B995 /* FourCreators.xcdatamodeld */; };
 		8492EF7B2FD8AB260053B995 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8492EF7A2FD8AB260053B995 /* PersistenceController.swift */; };
 		8492EF7D2FD8B78D0053B995 /* Plataform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8492EF7C2FD8B78D0053B995 /* Plataform.swift */; };
@@ -19,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8461939A2FD9C67B00642AD1 /* FolderListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderListView.swift; sourceTree = "<group>"; };
+		8461939C2FD9C93C00642AD1 /* FolderFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderFormView.swift; sourceTree = "<group>"; };
 		8492EF782FD8A33D0053B995 /* FourCreators.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FourCreators.xcdatamodel; sourceTree = "<group>"; };
 		8492EF7A2FD8AB260053B995 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		8492EF7C2FD8B78D0053B995 /* Plataform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plataform.swift; sourceTree = "<group>"; };
@@ -55,6 +59,8 @@
 			isa = PBXGroup;
 			children = (
 				8492EF802FD8BDFF0053B995 /* CreatePostView.swift */,
+				8461939A2FD9C67B00642AD1 /* FolderListView.swift */,
+				8461939C2FD9C93C00642AD1 /* FolderFormView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -185,7 +191,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8492EF792FD8A33D0053B995 /* FourCreators.xcdatamodeld in Sources */,
+				8461939D2FD9C93C00642AD1 /* FolderFormView.swift in Sources */,
 				8492EF812FD8BDFF0053B995 /* CreatePostView.swift in Sources */,
+				8461939B2FD9C67B00642AD1 /* FolderListView.swift in Sources */,
 				8492EF7F2FD8B90C0053B995 /* PostStatus.swift in Sources */,
 				8492EF7D2FD8B78D0053B995 /* Plataform.swift in Sources */,
 				9FAA74CE2FD90B8600AC806E /* ContentView.swift in Sources */,

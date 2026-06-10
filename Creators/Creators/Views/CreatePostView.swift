@@ -18,7 +18,17 @@ struct PostFormView: View {
     private var presentationMode
     
     var post: Post?
+    @FetchRequest(
+        sortDescriptors: [
+            NSSortDescriptor(
+                keyPath: \Folder.name,
+                ascending: true
+            )
+        ]
+    )
+    private var folders: FetchedResults<Folder>
     
+    @State private var selectedFolder: Folder?
     @State private var title: String = ""
     @State private var selectedPlataform = Plataform.instagram
     @State private var selectedStatus: PostStatus = .not_posted
@@ -44,6 +54,16 @@ struct PostFormView: View {
                     ForEach(PostStatus.allCases, id: \.self){ status in
                         Text(status.rawValue.capitalized)
                             .tag(status)
+                    }
+                }
+                
+                Picker("Pasta", selection: $selectedFolder){
+                    Text("Nenhuma")
+                        .tag(nil as Folder?)
+                    
+                    ForEach(folders){folder in
+                        Text(folder.name ?? "")
+                            .tag(folder as Folder?)
                     }
                 }
                 
@@ -84,6 +104,8 @@ private extension PostFormView {
         selectedStatus = PostStatus(rawValue: post.status ?? "") ?? .not_posted
         publishDate = post.publishDate ?? Date()
         briefing = post.briefing ?? ""
+        selectedFolder = post.folder
+        
         
     }
     
@@ -108,6 +130,7 @@ private extension PostFormView {
         currentPost.status = selectedStatus.rawValue
         currentPost.publishDate = publishDate
         currentPost.briefing = briefing
+        currentPost.folder = selectedFolder
         
         do {
             

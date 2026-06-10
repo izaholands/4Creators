@@ -24,7 +24,7 @@ struct ContentView: View {
     
     )
     private var posts: FetchedResults<Post>
-    
+        
     var body: some View {
         
         NavigationView {
@@ -39,6 +39,11 @@ struct ContentView: View {
                         Text(post.plataform ?? "")
                             .font(.caption)
                         
+                        if let folderName = post.folder?.name  {
+                            Text(folderName)
+                                .font(.caption2)
+                        }
+                        
                     }
                 
                 }
@@ -47,12 +52,24 @@ struct ContentView: View {
             .navigationTitle("Posts")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing){
-                    NavigationLink{
+                    
+                    HStack(spacing: 16){
+                        NavigationLink{
+                            PostFormView()
+                        } label: {
+                            Image(systemName: "plus")
+                        }
                         
-                        PostFormView()
-                    } label: {
-                        Image(systemName: "plus")
+                        
+                        NavigationLink{
+                            FolderFormView(folder: nil)
+                        } label: {
+                            Image(systemName: "folder.badge.plus")
+                        }
                     }
+                    
+                   
+                    
                 }
             }
         }
