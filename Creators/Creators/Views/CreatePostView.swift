@@ -28,12 +28,8 @@ struct PostFormView: View {
     )
     private var folders: FetchedResults<Folder>
     
-    @State private var selectedFolder: Folder?
-    @State private var title: String = ""
-    @State private var selectedPlataform = Plataform.instagram
-    @State private var selectedStatus: PostStatus = .not_posted
-    @State private var publishDate = Date()
-    @State private var briefing: String = ""
+    @StateObject
+    private var viewModel = PostFormViewModel()
     
     
     var body: some View {
@@ -41,23 +37,23 @@ struct PostFormView: View {
         Form{
             
             Section("Informacoes") {
-                TextField("Titulo", text: $title)
+                TextField("Titulo", text: $viewModel.title)
                 
-                Picker("Plataforma", selection: $selectedPlataform) {
+                Picker("Plataforma", selection: $viewModel.selectedPlataform) {
                     ForEach(Plataform.allCases, id: \.self){ plataform in
                         Text(plataform.rawValue)
                     }
                     
                 }
                 
-                Picker("Status", selection: $selectedStatus) {
+                Picker("Status", selection: $viewModel.selectedStatus) {
                     ForEach(PostStatus.allCases, id: \.self){ status in
                         Text(status.rawValue.capitalized)
                             .tag(status)
                     }
                 }
                 
-                Picker("Pasta", selection: $selectedFolder){
+                Picker("Pasta", selection: $viewModel.selectedFolder){
                     Text("Nenhuma")
                         .tag(nil as Folder?)
                     
@@ -67,24 +63,34 @@ struct PostFormView: View {
                     }
                 }
                 
-                DatePicker("Publicação", selection: $publishDate, displayedComponents: .date)
+                DatePicker("Publicação", selection: $viewModel.publishDate, displayedComponents: .date)
                 
             }
             
             Section("Observações"){
                 
-                TextEditor(text: $briefing)
+                TextEditor(text: $viewModel.briefing)
                     .frame(height: 100)
                 
             }
             
             Button("Salvar"){
                 
-                savePost()
+                if let post {
+                    viewModel.save(context: context, post: post)
+                }
+                
+                presentationMode
+                    .wrappedValue
+                    .dismiss()
             }
         }
         .navigationTitle(post == nil ? "Novo post" : "Editar post")
-        .onAppear{loadPost()}
+        .onAppear{
+            if let post{
+                viewModel.load(post: post)
+            }
+        }
         
     }
 }
@@ -98,13 +104,13 @@ private extension PostFormView {
             return
         }
         
-        title = post.title ?? ""
+        viewModel.title = post.title ?? ""
         
-        selectedPlataform = Plataform(rawValue: post.plataform ?? "") ?? .instagram
-        selectedStatus = PostStatus(rawValue: post.status ?? "") ?? .not_posted
-        publishDate = post.publishDate ?? Date()
-        briefing = post.briefing ?? ""
-        selectedFolder = post.folder
+        viewModel.selectedPlataform = Plataform(rawValue: post.plataform ?? "") ?? .instagram
+        viewModel.selectedStatus = PostStatus(rawValue: post.status ?? "") ?? .not_posted
+        viewModel.publishDate = post.publishDate ?? Date()
+        viewModel.briefing = post.briefing ?? ""
+        viewModel.selectedFolder = post.folder
         
         
     }
@@ -125,12 +131,12 @@ private extension PostFormView {
             
         }
         
-        currentPost.title = title
-        currentPost.plataform = selectedPlataform.rawValue
-        currentPost.status = selectedStatus.rawValue
-        currentPost.publishDate = publishDate
-        currentPost.briefing = briefing
-        currentPost.folder = selectedFolder
+        currentPost.title = viewModel.title
+        currentPost.plataform = viewModel.selectedPlataform.rawValue
+        currentPost.status = viewModel.selectedStatus.rawValue
+        currentPost.publishDate = viewModel.publishDate
+        currentPost.briefing = viewModel.briefing
+        currentPost.folder = viewModel.selectedFolder
         
         do {
             

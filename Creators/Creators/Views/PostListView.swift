@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-struct ContentView: View {
+struct PostListView: View {
     
     @Environment(\.managedObjectContext)
     private var context
