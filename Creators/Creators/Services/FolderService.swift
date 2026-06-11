@@ -19,6 +19,8 @@ protocol FolderServiceProtocol {
     func deleteFolder(_ folder: Folder,context: NSManagedObjectContext)
 
     func save(context: NSManagedObjectContext) throws
+    
+    func find(byName name: String, context: NSManagedObjectContext) -> Folder?
 }
 
 
@@ -43,4 +45,12 @@ final class FolderService: FolderServiceProtocol {
     func save(context: NSManagedObjectContext) throws {
         try context.save()
     }
+    
+    func find(byName name: String, context: NSManagedObjectContext) -> Folder? {
+            let request = Folder.fetchRequest()
+            request.predicate = NSPredicate(format: "name ==[c] %@", name) // [c] = case insensitive
+            request.fetchLimit = 1
+            return try? context.fetch(request).first
+        }
+
 }

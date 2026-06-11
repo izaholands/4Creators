@@ -1,7 +1,8 @@
 import SwiftUI
 
 struct ContentView: View {
-@State private var selectedTab: Int = 0
+    @State private var selectedTab: Int = 0
+    let persistenceController = PersistenceController.shared
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -9,8 +10,8 @@ struct ContentView: View {
             // Conteúdo das abas
             Group {
                 if selectedTab == 0 { HomeView() }
-                if selectedTab == 1 { NewPostView() }
-                if selectedTab == 2 { ProjectsView() }
+                if selectedTab == 1 { NewPostView(selectedTab: $selectedTab)}
+                if selectedTab == 2 { NavPublications() }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
 

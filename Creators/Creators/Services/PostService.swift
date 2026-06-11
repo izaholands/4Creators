@@ -12,6 +12,7 @@ protocol PostServiceProtocol {
 
     func createPost(
         title: String,
+        script: String,
         plataform: Plataform,
         status: PostStatus,
         publishDate: Date?,
@@ -28,6 +29,7 @@ protocol PostServiceProtocol {
     func updatePost(
             _ post: Post,
             title: String,
+            script: String,
             plataform: Plataform,
             status: PostStatus,
             publishDate: Date?,
@@ -45,6 +47,7 @@ final class PostService: PostServiceProtocol {
 
     func createPost(
         title: String,
+        script: String,
         plataform: Plataform,
         status: PostStatus,
         publishDate: Date?,
@@ -57,6 +60,7 @@ final class PostService: PostServiceProtocol {
 
         post.id = UUID()
         post.title = title
+        post.script = script
         post.plataform = plataform.rawValue
         post.status = status.rawValue
         post.publishDate = publishDate
@@ -68,6 +72,7 @@ final class PostService: PostServiceProtocol {
     func updatePost(
             _ post: Post,
             title: String,
+            script: String,
             plataform: Plataform,
             status: PostStatus,
             publishDate: Date?,
@@ -75,6 +80,7 @@ final class PostService: PostServiceProtocol {
             folder: Folder?
         ) {
             post.title = title
+            post.script = script
             post.plataform = plataform.rawValue
             post.status = status.rawValue
             post.publishDate = publishDate

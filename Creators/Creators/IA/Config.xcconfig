@@ -1,0 +1,11 @@
+//
+//  Config.xcconfig
+//  Creators
+//
+//  Created by admin on 11/06/26.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+OPENAI_API_KEY = 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

@@ -12,4 +12,6 @@ enum Plataform: String, CaseIterable {
     case instagram = "Instagram"
     case tiktok = "TikTok"
     case youtube = "YouTube"
+    case feed = "Feed"
+    case story = "Story"
 }

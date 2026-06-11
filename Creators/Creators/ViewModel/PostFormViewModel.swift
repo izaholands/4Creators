@@ -17,6 +17,7 @@ final class PostFormViewModel: ObservableObject {
     @Published var publishDate = Date()
     @Published var briefing = ""
     @Published var selectedFolder: Folder?
+    @Published var script = ""
     
     private var service: PostServiceProtocol
     
@@ -27,6 +28,7 @@ final class PostFormViewModel: ObservableObject {
     func load(post: Post){
         
         title = post.title ?? ""
+        script = post.script ?? ""
         selectedPlataform = Plataform(rawValue: post.plataform ?? "") ?? .instagram
         selectedStatus = PostStatus(rawValue: post.status ?? "") ?? .not_posted
         publishDate = post.publishDate ?? Date()
@@ -46,6 +48,7 @@ final class PostFormViewModel: ObservableObject {
             currentPost.createdAt = Date()
         }
         currentPost.title = title
+        currentPost.script = script
         currentPost.plataform = selectedPlataform.rawValue
         currentPost.status = selectedStatus.rawValue
         currentPost.publishDate = publishDate
@@ -59,6 +62,7 @@ final class PostFormViewModel: ObservableObject {
 
         service.createPost(
             title: title,
+            script: script,
             plataform: selectedPlataform,
             status: selectedStatus,
             publishDate: publishDate,

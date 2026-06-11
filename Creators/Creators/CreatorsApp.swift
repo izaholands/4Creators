@@ -11,17 +11,18 @@ import SwiftUI
 struct CreatorsApp: App {
   
     let persistenceController = PersistenceController.shared
-  
+    
+    init() {
+              UINavigationBar.appearance().tintColor = .systemIndigo
+          }
+
     var body: some Scene {
         WindowGroup {
-//            PostListView()
-//                .environment(
-//                    \.managedObjectContext,
-//                     persistenceController
-//                        .container
-//                        .viewContext
-//                )
             ContentView()
+                .environment(
+                    \.managedObjectContext,
+                    persistenceController.container.viewContext
+                )
         }
     }
 }

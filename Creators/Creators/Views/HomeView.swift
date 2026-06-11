@@ -72,15 +72,9 @@ struct HomeView: View {
             .padding(.bottom, 40)
         }
         .background(Color(.systemGroupedBackground))
-        .sheet(isPresented: $showAISheet) {
-            VStack(spacing: 16) {
-                Image(systemName: "sparkle")
-                    .font(.system(size: 32))
-                    .foregroundColor(.indigo)
-                Text("IA em breve")
-                    .font(.title2.bold())
-            }
-            .padding()
+        .sheet(isPresented: $showAISheet){
+            AISheetView()
+                .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
         }
     }
 }
