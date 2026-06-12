@@ -18,7 +18,29 @@ struct HomeView: View {
         let raw = formatter.string(from: selectedDate)
         return raw.prefix(1).uppercased() + raw.dropFirst()
     }
-
+    
+    @FetchRequest(
+        sortDescriptors: [
+            NSSortDescriptor(
+                keyPath: \Post.publishDate,
+                ascending: true
+            )
+        ],
+        animation: .default
+    )
+    private var posts: FetchedResults<Post>
+    
+    
+    private var postForSelectedDate: [Post] {
+        
+        posts.filter{post in
+            guard let publishedDate = post.publishDate else {
+                return false
+            }
+            return Calendar.current.isDate(publishedDate, inSameDayAs: selectedDate)
+        }
+        
+    }
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 24) {
@@ -54,17 +76,25 @@ struct HomeView: View {
                         .font(.system(size: 15))
                         .foregroundColor(.primary)
 
-                    // Posts virão aqui — outra pessoa implementa
-                    VStack(spacing: 10) {
-                        Image(systemName: "calendar.badge.plus")
-                            .font(.system(size: 36))
-                            .foregroundColor(Color(.systemGray3))
-                        Text("Nenhuma publicação para este dia")
-                            .font(.system(size: 14))
-                            .foregroundColor(Color(.systemGray))
+                    if postForSelectedDate.isEmpty{
+                        VStack(spacing: 10){
+                            Image(systemName: "calendar.badge.plus")
+                                .font(.system(size: 36))
+                                .foregroundColor(Color(.systemGray3))
+                            
+                            Text("Nenhuma publicação para este dia")
+                                .font(.system(size: 14))
+                                .foregroundColor(Color(.systemGray))
+                        }
+                        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+                        .padding(.vertical, 50)
+                    } else {
+                        LazyVStack (spacing: 12){
+                            ForEach(postForSelectedDate){post in
+                                Cards(post: post)
+                            }
+                        }
                     }
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 50)
                 }
             }
             .padding(.horizontal, 16)

@@ -26,7 +26,7 @@ struct NewPostView: View {
     @State private var selectedStatus: PostStatus = .not_posted
     @State private var selectedDate: Date = Date()
     @State private var selectedTime: Date = Date()
-    @State private var selectedPlatform: Plataform = .tiktok
+    @State private var selectedPlatform: Plataform = .instagram
     @State private var selectedFolder: Folder? = nil
 
     // Toggles
@@ -96,19 +96,35 @@ struct NewPostView: View {
 
                             // Status
                             FormRow(
-                                icon: selectedStatus == .posted ? "arrow.up.circle" : "arrow.up.circle.dotted",
+                                icon: selectedStatus == .posted ? "arrow.up.circle" : "arrow.down.circle",
                                 iconColor: selectedStatus == .posted ? .green : .red,
                                 title: "Status"
                             ) {
-                                Button {
-                                    withAnimation(.easeInOut(duration: 0.2)) { showStatusSheet = true }
+                                Menu {
+                                    
+                                    ForEach(PostStatus.allCases, id: \.self){ status in
+                                        Button {
+                                            selectedStatus = status
+                                        } label: {
+                                            HStack {
+                                                Text(status.rawValue)
+                                                
+                                                if selectedStatus == status {
+                                                    Image(systemName: "checkmark")
+                                                }
+                                            }
+                                            
+                                        }
+                                    }
                                 } label: {
-                                    HStack(spacing: 6) {
-                                        Text(selectedStatus.rawValue).foregroundColor(Color(.systemGray))
+                                    HStack (spacing: 6){
+                                        Text(selectedStatus.rawValue)
+                                            .foregroundColor(Color(.systemGray))
+                                        
                                         Image(systemName: "chevron.right")
                                             .font(.system(size: 14, weight: .semibold))
-                                            .foregroundColor(Color(.systemGray3))
                                     }
+                                    
                                 }
                             }
 
@@ -133,18 +149,34 @@ struct NewPostView: View {
 
                             // Plataforma
                             FormRow(icon: "play.square.stack.fill", iconColor: .indigo, title: "Plataforma") {
-                                Button {
-                                    withAnimation(.easeInOut(duration: 0.2)) { showPlatformSheet = true }
-                                } label: {
-                                    HStack(spacing: 6) {
-                                        Text(selectedPlatform.rawValue).foregroundColor(Color(.systemGray))
+                                Menu {
+                                    
+                                    ForEach(Plataform.allCases, id: \.self){ plataform in
+                                        Button {
+                                            selectedPlatform = plataform
+                                        } label : {
+                                            HStack {
+                                                Text(plataform.rawValue)
+                                                
+                                                if selectedPlatform == plataform {
+                                                    Image(systemName: "checkmark")
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                } label : {
+                                    HStack(spacing: 6){
+                                        Text(selectedPlatform.rawValue)
+                                            .foregroundColor(Color(.systemGray))
+                                        
                                         Image(systemName: "chevron.right")
                                             .font(.system(size: 14, weight: .semibold))
-                                            .foregroundColor(Color(.systemGray3))
+                                            .foregroundColor(Color(.systemGray))
                                     }
                                 }
                             }
-
+                            
                             Divider().padding(.leading, 52)
 
                             // Pasta — Menu nativo

@@ -16,6 +16,7 @@ struct Cards: View {
     let time: String
     let plataform: String
     
+    
     init(post: Post){
         
         self.title = post.title ?? "Sem titulo"
@@ -52,16 +53,26 @@ struct Cards: View {
         }
     }
     
+    // Init para mocks
+     init(post: SearchDetails) {
+         self.title = post.titulo
+         self.plataform = post.plataforma
+         self.date = post.data
+         self.time = post.hora
+         self.textStatus = post.status.first?.texto ?? ""
+         self.iconStatus = post.status.first?.icone ?? ""
+         self.colorStatus = post.status.first?.cor ?? .gray
+     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 24) {
+        VStack(alignment: .leading, spacing: 14) {
 
             Text(title)
-                .font(.system(size: 20, weight: .bold))
+                .font(.system(size: 20, weight: .semibold))
 
             HStack(spacing: 16) {
                 Image(systemName: iconStatus)
-                    .font(.system(size: 25))
+                    .font(.system(size: 20))
                     .foregroundColor(colorStatus)
                 Text(textStatus)
                     .font(.system(size: 16, weight: .bold))
@@ -69,7 +80,7 @@ struct Cards: View {
 
             HStack(spacing: 16) {
                 Image(systemName: "calendar.badge.clock")
-                    .font(.system(size: 25))
+                    .font(.system(size: 20))
                     .foregroundColor(.indigo)
 
                 Text(time.isEmpty ? date : "\(date), \(time)")
@@ -80,16 +91,15 @@ struct Cards: View {
                 //play.square.stack.fill
                 //MUDAR AQUI O ICONEEEEEEEEEEEEEEEEEE
                 Image(systemName: "play.square.stack.fill")
-                    .font(.system(size: 25))
+                    .font(.system(size: 20))
                     .foregroundColor(.indigo)
 
                 Text(plataform)
                     .font(.system(size: 15))
             }
         }
-        .padding(30)
+        .padding(25)
         .frame(maxWidth: .infinity, alignment: .leading)
-//        .background(Color("CardColor"))
         .background(.white)
         .cornerRadius(40)
         .shadow(color: Color.black.opacity(0.12),radius: 25,x: 0,y: 15)
@@ -102,3 +112,7 @@ struct Cards: View {
 //        Cards(post: SearchProvider.all()[0])
 //    }
 //}
+
+#Preview {
+    Cards(post: SearchProvider.all()[0])
+}

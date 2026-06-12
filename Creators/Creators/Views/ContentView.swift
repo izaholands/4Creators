@@ -16,7 +16,10 @@ struct ContentView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
 
             // Tab bar customizada
-            customTabBar
+            if selectedTab != 1 {
+                customTabBar
+            }
+            //customTabBar
         }
         .ignoresSafeArea(edges: .bottom)
     }

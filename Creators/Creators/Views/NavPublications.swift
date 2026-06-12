@@ -62,6 +62,10 @@ struct NavPublications: View {
     )
     private var folders: FetchedResults<Folder>
     
+    init() {
+        UIScrollView.appearance().backgroundColor = .white
+    }
+    
     var body: some View {
         NavigationView{
         VStack {
@@ -73,8 +77,8 @@ struct NavPublications: View {
                 Image(systemName: "mic.fill")
             }
             .padding()
-            .background(Color(.systemGray6))
-            .cornerRadius(10)
+            .background(Color("cintaCustom"))
+            .cornerRadius(100)
             .padding()
 
             
@@ -82,20 +86,31 @@ struct NavPublications: View {
                 Picker("", selection: $padrao ) {
                     ForEach(TipoConteudo.allCases, id: \.self) { tipo in
                         Text(tipo.rawValue)
-                                    }
-                                }
-                                .pickerStyle(.segmented)
+                            
+                    }
+                    .padding(2)
+                }
+                .pickerStyle(.segmented)
+                .padding([.horizontal, .bottom])
+                .cornerRadius(9)
             }
             
             ScrollView{
-                VStack(spacing: 20) {
+                VStack(spacing: 12) {
                     switch padrao {
                     
                     case .publicacoes:
                         if posts.isEmpty {
-                            Text("Nenhuma publicação encontrada")
-                                .foregroundColor(.secondary)
-                                .padding(.top, 40)
+                            
+                            // mock preview
+                            ForEach(SearchProvider.all()){ post in
+                                Cards(post: post)
+                                    .padding(.bottom, 10)
+                            }
+                            
+//                            Text("Nenhuma publicação encontrada")
+//                                .foregroundColor(.secondary)
+//                                .padding(.top, 40)
                         } else {
                             ForEach(posts.filter {
                                 searchText.isEmpty ||
@@ -107,7 +122,6 @@ struct NavPublications: View {
                     //exibe a tela de pastas
                     case .pastas:
                         if folders.isEmpty {
-                            
                             Text("Nenhuma pasta encontrada")
                                 .foregroundColor(.secondary)
                                 .padding(.top, 40)
@@ -122,7 +136,12 @@ struct NavPublications: View {
                         }
                     }
                 }
+                .background(Color.white)
+                .frame(maxWidth: .infinity)
             }
+            .background(Color.white)
+            .padding(.bottom, 50)
+        
         }
         .navigationBarHidden(true)
         .navigationTitle("Voltar")
@@ -132,12 +151,13 @@ struct NavPublications: View {
     }
 }
 
-struct NavPublications_Previews: PreviewProvider {
-    static var previews: some View {
-        NavPublications()
-    }
-}
-//
-//#Preview {
-//    ContentView()
+//struct NavPublications_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NavPublications()
+//        
+//    }
 //}
+//
+#Preview {
+    NavPublications()
+}
