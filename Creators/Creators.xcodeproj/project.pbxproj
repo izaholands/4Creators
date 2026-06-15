@@ -16,8 +16,8 @@
 		841076672FDB33EF00B7AA18 /* PastasGRWM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841076662FDB33EF00B7AA18 /* PastasGRWM.swift */; };
 		841076692FDB340A00B7AA18 /* NavPublications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841076682FDB340A00B7AA18 /* NavPublications.swift */; };
 		8410766B2FDB342300B7AA18 /* NavPastaOpen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8410766A2FDB342300B7AA18 /* NavPastaOpen.swift */; };
-		8410766D2FDB343700B7AA18 /* NavDetaisPublication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8410766C2FDB343700B7AA18 /* NavDetaisPublication.swift */; };
 		8410766F2FDB350300B7AA18 /* AISheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8410766E2FDB350300B7AA18 /* AISheetView.swift */; };
+		8441344C2FE06F25007C4438 /* NewFolderBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441344B2FE06F25007C4438 /* NewFolderBottomView.swift */; };
 		8461939B2FD9C67B00642AD1 /* FolderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8461939A2FD9C67B00642AD1 /* FolderListView.swift */; };
 		8461939D2FD9C93C00642AD1 /* FolderFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8461939C2FD9C93C00642AD1 /* FolderFormView.swift */; };
 		8461939F2FD9D7F800642AD1 /* PostFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8461939E2FD9D7F800642AD1 /* PostFormViewModel.swift */; };
@@ -33,6 +33,7 @@
 		846193B52FD9F6C800642AD1 /* NewPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846193B42FD9F6C800642AD1 /* NewPostView.swift */; };
 		846193BF2FDA071500642AD1 /* AIAgentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846193BE2FDA071500642AD1 /* AIAgentService.swift */; };
 		846389D62FDC46370052E5A5 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846389D52FDC46370052E5A5 /* Utils.swift */; };
+		846389D82FDC7D870052E5A5 /* PostDetaisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846389D72FDC7D870052E5A5 /* PostDetaisView.swift */; };
 		8492EF792FD8A33D0053B995 /* FourCreators.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8492EF772FD8A33D0053B995 /* FourCreators.xcdatamodeld */; };
 		8492EF7B2FD8AB260053B995 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8492EF7A2FD8AB260053B995 /* PersistenceController.swift */; };
 		8492EF7D2FD8B78D0053B995 /* Plataform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8492EF7C2FD8B78D0053B995 /* Plataform.swift */; };
@@ -56,8 +57,8 @@
 		841076662FDB33EF00B7AA18 /* PastasGRWM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastasGRWM.swift; sourceTree = "<group>"; };
 		841076682FDB340A00B7AA18 /* NavPublications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavPublications.swift; sourceTree = "<group>"; };
 		8410766A2FDB342300B7AA18 /* NavPastaOpen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavPastaOpen.swift; sourceTree = "<group>"; };
-		8410766C2FDB343700B7AA18 /* NavDetaisPublication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavDetaisPublication.swift; sourceTree = "<group>"; };
 		8410766E2FDB350300B7AA18 /* AISheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AISheetView.swift; sourceTree = "<group>"; };
+		8441344B2FE06F25007C4438 /* NewFolderBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFolderBottomView.swift; sourceTree = "<group>"; };
 		8461939A2FD9C67B00642AD1 /* FolderListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderListView.swift; sourceTree = "<group>"; };
 		8461939C2FD9C93C00642AD1 /* FolderFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderFormView.swift; sourceTree = "<group>"; };
 		8461939E2FD9D7F800642AD1 /* PostFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFormViewModel.swift; sourceTree = "<group>"; };
@@ -73,6 +74,7 @@
 		846193B42FD9F6C800642AD1 /* NewPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostView.swift; sourceTree = "<group>"; };
 		846193BE2FDA071500642AD1 /* AIAgentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIAgentService.swift; sourceTree = "<group>"; };
 		846389D52FDC46370052E5A5 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		846389D72FDC7D870052E5A5 /* PostDetaisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetaisView.swift; sourceTree = "<group>"; };
 		8492EF782FD8A33D0053B995 /* FourCreators.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FourCreators.xcdatamodel; sourceTree = "<group>"; };
 		8492EF7A2FD8AB260053B995 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		8492EF7C2FD8B78D0053B995 /* Plataform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plataform.swift; sourceTree = "<group>"; };
@@ -160,8 +162,9 @@
 				846193B42FD9F6C800642AD1 /* NewPostView.swift */,
 				841076682FDB340A00B7AA18 /* NavPublications.swift */,
 				8410766A2FDB342300B7AA18 /* NavPastaOpen.swift */,
-				8410766C2FDB343700B7AA18 /* NavDetaisPublication.swift */,
 				8410766E2FDB350300B7AA18 /* AISheetView.swift */,
+				846389D72FDC7D870052E5A5 /* PostDetaisView.swift */,
+				8441344B2FE06F25007C4438 /* NewFolderBottomView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -312,7 +315,6 @@
 				8492EF7F2FD8B90C0053B995 /* PostStatus.swift in Sources */,
 				846193AB2FD9ED0E00642AD1 /* AIAction.swift in Sources */,
 				841076632FDB33C700B7AA18 /* Search.swift in Sources */,
-				8410766D2FDB343700B7AA18 /* NavDetaisPublication.swift in Sources */,
 				846193B32FD9F60B00642AD1 /* PostListView.swift in Sources */,
 				846193A62FD9EBBA00642AD1 /* WeekCalendarView.swift in Sources */,
 				846193A22FD9DC3500642AD1 /* PostService.swift in Sources */,
@@ -324,12 +326,14 @@
 				9FAA74CE2FD90B8600AC806E /* ContentView.swift in Sources */,
 				9FAA74CC2FD90B8600AC806E /* CreatorsApp.swift in Sources */,
 				841076692FDB340A00B7AA18 /* NavPublications.swift in Sources */,
+				846389D82FDC7D870052E5A5 /* PostDetaisView.swift in Sources */,
 				8492EF7B2FD8AB260053B995 /* PersistenceController.swift in Sources */,
 				8410765E2FDB320100B7AA18 /* CardsPastas.swift in Sources */,
 				846193B52FD9F6C800642AD1 /* NewPostView.swift in Sources */,
 				846389D62FDC46370052E5A5 /* Utils.swift in Sources */,
 				8410766B2FDB342300B7AA18 /* NavPastaOpen.swift in Sources */,
 				841076672FDB33EF00B7AA18 /* PastasGRWM.swift in Sources */,
+				8441344C2FE06F25007C4438 /* NewFolderBottomView.swift in Sources */,
 				8410765C2FDB31F200B7AA18 /* CardsPublis.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

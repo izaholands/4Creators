@@ -2,24 +2,98 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var selectedTab: Int = 0
+    @State private var navigationDepth : Int = 0
+    @State private var showCreateMenu: Bool = false
+    @State private var showNewFolderSheet: Bool = false
+    
+    private var hideTabBar: Bool {
+        navigationDepth > 0
+    }
     let persistenceController = PersistenceController.shared
 
     var body: some View {
         ZStack(alignment: .bottom) {
-
+            
             // Conteúdo das abas
             Group {
-                if selectedTab == 0 { HomeView() }
+                if selectedTab == 0 { HomeView(navigationDepth: $navigationDepth) }
                 if selectedTab == 1 { NewPostView(selectedTab: $selectedTab)}
-                if selectedTab == 2 { NavPublications() }
+                if selectedTab == 2 { NavPublications(navigationDepth: $navigationDepth) }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
 
             // Tab bar customizada
-            if selectedTab != 1 {
+            if selectedTab != 1  && !hideTabBar{
                 customTabBar
             }
-            //customTabBar
+           
+            if showCreateMenu {
+                Color.black.opacity(0.35)
+                    .ignoresSafeArea()
+                    .onTapGesture {
+                        withAnimation(.easeInOut(duration: 0.25)) {
+                            showCreateMenu = false
+                        }
+                    }
+
+                VStack {
+                    Spacer()
+
+                    CreateSelectionView(
+                        selectedTab: $selectedTab,
+                        isPresented: $showCreateMenu,
+                        showNewFolderSheet: $showNewFolderSheet
+                    )
+                    .frame(height: 240)
+                    .background(Color.white)
+                    .clipShape(
+                        CornerShape(
+                            radius: 24,
+                            corners: [.topLeft, .topRight]
+                        )
+                    )
+                }
+                .ignoresSafeArea(edges: .bottom)
+                .transition(.move(edge: .bottom))
+                .zIndex(10)
+            }
+                
+            if showNewFolderSheet {
+                Color.black.opacity(0.35)
+                    .ignoresSafeArea()
+                    .onTapGesture {
+                        UIApplication.shared.sendAction(
+                            #selector(UIResponder.resignFirstResponder),
+                            to: nil,
+                            from: nil,
+                            for: nil
+                        )
+
+                        withAnimation(.easeInOut(duration: 0.25)) {
+                            showNewFolderSheet = false
+                        }
+                    }
+
+                VStack {
+                    Spacer()
+
+                    NewFolderBottomView(
+                        isPresented: $showNewFolderSheet,
+                        selectedTab: $selectedTab
+                    )
+                    .frame(height: 200)
+                    .background(Color.white)
+                    .clipShape(
+                        CornerShape(
+                            radius: 24,
+                            corners: [.topLeft, .topRight]
+                        )
+                    )
+                }
+                .ignoresSafeArea(edges: .bottom)
+                .transition(.move(edge: .bottom))
+                .zIndex(11)
+            }
         }
         .ignoresSafeArea(edges: .bottom)
     }
@@ -45,7 +119,9 @@ struct ContentView: View {
 
                 // Botão + central
                 Button {
-                    selectedTab = 1
+                    withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                        showCreateMenu = true
+                    }
                 } label: {
                     ZStack {
                         Circle()
@@ -86,6 +162,87 @@ struct ContentView: View {
                     .font(.system(size: 10, weight: .medium))
             }
             .foregroundColor(selectedTab == tab ? .indigo : Color(.systemGray2))
+        }
+    }
+}
+
+struct CreateSelectionView: View {
+    @Binding var selectedTab: Int
+    @Binding var isPresented: Bool
+    @Binding var showNewFolderSheet: Bool
+
+    var body: some View {
+        VStack(spacing: 0) {
+            HStack {
+                Spacer()
+                Text("Criar novo").font(.headline).bold().padding(.leading, 24)
+                Spacer()
+                Button {
+                    withAnimation(.easeInOut(duration: 0.25)) { isPresented = false }
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundColor(Color(.systemGray3))
+                        .font(.title3)
+                }
+            }
+            .padding()
+
+            VStack(spacing: 12) {
+                Button {
+                    withAnimation(.easeInOut(duration: 0.25)) {
+                        selectedTab = 1
+                        isPresented = false
+                    }
+                } label: {
+                    HStack {
+                        Image(systemName: "doc.plaintext.fill")
+                            .foregroundColor(.indigo)
+                            .font(.system(size: 18))
+                        Text("Nova Publicação")
+                            .foregroundColor(.primary)
+                            .font(.body)
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(Color(.systemGray3))
+                            .font(.system(size: 14, weight: .semibold))
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 14)
+                    .background(Color(.systemGray6))
+                    .cornerRadius(12)
+                }
+
+                Button {
+                    withAnimation(.easeInOut(duration: 0.25)) {
+                        isPresented = false
+                    }
+                    // Abre a aba menorzinha de pastas logo em seguida
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.28) {
+                        withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                            showNewFolderSheet = true
+                        }
+                    }
+                } label: {
+                    HStack {
+                        Image(systemName: "folder.fill")
+                            .foregroundColor(.indigo)
+                            .font(.system(size: 18))
+                        Text("Nova Pasta")
+                            .foregroundColor(.primary)
+                            .font(.body)
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(Color(.systemGray3))
+                            .font(.system(size: 14, weight: .semibold))
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 14)
+                    .background(Color(.systemGray6))
+                    .cornerRadius(12)
+                }
+            }
+            .padding(.horizontal, 20)
+            Spacer()
         }
     }
 }

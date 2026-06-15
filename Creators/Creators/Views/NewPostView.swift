@@ -3,9 +3,17 @@ import CoreData
 
 struct NewPostView: View {
     @Binding var selectedTab: Int
+    var postToEdit: Post? = nil
 
     @Environment(\.managedObjectContext) 
     private var context
+    
+    @Environment(\.dismiss)
+    private var dismiss
+    
+    @Environment(\.presentationMode)
+    private var presentationMode
+
 
     @FetchRequest(
         sortDescriptors: [
@@ -21,6 +29,7 @@ struct NewPostView: View {
     @State private var titleText: String = ""
     @State private var briefingText: String = ""
     @State private var roteiroText: String = ""
+    @State private var titleHeight: CGFloat = 24
 
     // Seleções
     @State private var selectedStatus: PostStatus = .not_posted
@@ -51,7 +60,11 @@ struct NewPostView: View {
                 // Header
                 HStack {
                     Button {
-                        selectedTab = 0
+                        if postToEdit != nil {
+                            presentationMode.wrappedValue.dismiss()
+                        } else {
+                            selectedTab = 0
+                        }
                     } label: {
                         HStack(spacing: 4) {
                             Image(systemName: "chevron.left")
@@ -61,7 +74,7 @@ struct NewPostView: View {
                         .foregroundColor(.indigo)
                     }
                     Spacer()
-                    Text("Criar postagem")
+                    Text(postToEdit == nil ? "Criar postagem" : "Editar postagem")
                         .font(.headline)
                         .bold()
                     Spacer()
@@ -75,16 +88,36 @@ struct NewPostView: View {
                     VStack(spacing: 20) {
 
                         // Título
-                        HStack {
-                            TextField("Título", text: $titleText)
-                                .font(.body)
-                                .onChange(of: titleText) { newValue in
-                                    if newValue.count > 20 { titleText = String(newValue.prefix(20)) }
+                        HStack(alignment: .top, spacing: 0) {
+                            ZStack(alignment: .topLeading) {
+
+                                if titleText.isEmpty {
+                                    Text("Título")
+                                        .foregroundColor(Color(.systemGray3))
+                                        .font(.body)
+                                        .padding(.top, 2)
                                 }
-                            Spacer()
-                            Text("\(titleText.count)/20")
+
+                                MultilineTitleTextView(
+                                    text: $titleText,
+                                    height: $titleHeight,
+                                    maxHeight: 60
+                                )
+                                .frame(
+                                    height: max(
+                                        24,
+                                        min(titleHeight, 60)
+                                    )
+                                )
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
+                            Spacer(minLength: 16)
+
+                            Text("\(titleText.count)/50")
                                 .font(.subheadline)
                                 .foregroundColor(.gray)
+                                .padding(.top, 2)
                         }
                         .padding(.horizontal, 16)
                         .padding(.vertical, 14)
@@ -264,7 +297,11 @@ struct NewPostView: View {
 
                 // Botão Salvar
                 Button {
-                    savePost()
+                    if postToEdit == nil {
+                        savePost()
+                    } else {
+                        updatePost()
+                    }
                 } label: {
                     Text("Salvar")
                         .font(.headline)
@@ -318,7 +355,26 @@ struct NewPostView: View {
         } message: {
             Text(errorMessage)
         }
+        .onAppear{
+            guard let post = postToEdit else { return }
+               titleText = post.title ?? ""
+               roteiroText = post.script ?? ""
+               briefingText = post.briefing ?? ""
+               selectedStatus = PostStatus(rawValue: post.status ?? "") ?? .not_posted
+               selectedPlatform = Plataform(rawValue: post.plataform ?? "") ?? .instagram
+               selectedFolder = post.folder
+
+               if let date = post.publishDate {
+                   selectedDate = date
+                   selectedTime = date
+               }
+
+               isRoteiroEnabled = !(post.script ?? "").isEmpty
+               isBriefingEnabled = !(post.briefing ?? "").isEmpty
+        }
+        .navigationBarHidden(true)
     }
+    
 
     // MARK: - Save
 
@@ -358,6 +414,121 @@ struct NewPostView: View {
         combined.minute = timeComponents.minute
 
         return calendar.date(from: combined) ?? date
+    }
+    
+    private func updatePost(){
+        
+        guard let post = postToEdit else {return}
+        let publishedDate = combineDateAndTime(date: selectedDate, time: selectedTime)
+        
+        postService.updatePost(
+            post,
+            title: titleText.trimmingCharacters(in: .whitespaces),
+            script: isRoteiroEnabled ? roteiroText : "",
+            plataform: selectedPlatform,
+            status: selectedStatus,
+            publishDate: publishedDate,
+            briefing: isBriefingEnabled ? briefingText : "",
+            folder: selectedFolder
+        )
+        
+        
+        do {
+            
+            try postService.save(context: context)
+            presentationMode.wrappedValue.dismiss()
+            
+        } catch {
+            errorMessage = error.localizedDescription
+            showError = true
+        }
+    }
+    
+}
+
+// MARK: - Componente de Título Multiline Dinâmico (iOS 15 Corrigido)
+struct MultilineTitleTextView: UIViewRepresentable {
+    @Binding var text: String
+    @Binding var height: CGFloat
+    var maxHeight: CGFloat
+
+    func makeUIView(context: Context) -> UITextView {
+        let tv = UITextView()
+        tv.backgroundColor = .clear
+        tv.font = UIFont.preferredFont(forTextStyle: .body)
+        tv.delegate = context.coordinator
+        
+        // Mantemos true para que o iOS respeite as margens horizontais e quebre as linhas
+        tv.isScrollEnabled = true
+        tv.textContainerInset = UIEdgeInsets(top: 2, left: 0, bottom: 2, right: 0)
+        tv.textContainer.lineFragmentPadding = 0
+        tv.textContainer.lineBreakMode = .byCharWrapping // Força quebra de linha por caractere
+        
+        tv.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        tv.returnKeyType = .done
+        
+        return tv
+    }
+
+    func updateUIView(_ uiView: UITextView, context: Context) {
+        if uiView.text != text {
+            uiView.text = text
+        }
+        recalcHeight(uiView)
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(text: $text, height: $height, maxHeight: maxHeight)
+    }
+
+    private func recalcHeight(_ uiView: UITextView) {
+        let width = uiView.frame.width > 0 ? uiView.frame.width : 200
+        let size = uiView.sizeThatFits(CGSize(width: width, height: .infinity))
+        let newHeight = min(size.height, maxHeight)
+        
+        if height != newHeight {
+            DispatchQueue.main.async { height = newHeight }
+        }
+    }
+
+    class Coordinator: NSObject, UITextViewDelegate {
+        @Binding var text: String
+        @Binding var height: CGFloat
+        var maxHeight: CGFloat
+
+        init(text: Binding<String>, height: Binding<CGFloat>, maxHeight: CGFloat) {
+            _text = text
+            _height = height
+            self.maxHeight = maxHeight
+        }
+
+        func textViewDidChange(_ textView: UITextView) {
+            // Impede quebras de linha manuais (Enter), mantendo apenas o wrap automático
+            let filtered = textView.text.replacingOccurrences(of: "\n", with: "")
+            
+            if filtered.count > 50 {
+                text = String(filtered.prefix(50))
+                textView.text = text
+            } else {
+                text = filtered
+            }
+            
+            let width = textView.frame.width > 0 ? textView.frame.width : 200
+            let size = textView.sizeThatFits(CGSize(width: width, height: .infinity))
+            let newHeight = min(size.height, maxHeight)
+            
+            if height != newHeight {
+                DispatchQueue.main.async { self.height = newHeight }
+            }
+        }
+
+        func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+            if text == "\n" {
+                textView.resignFirstResponder()
+                return false
+            }
+            return true
+        }
     }
 }
 

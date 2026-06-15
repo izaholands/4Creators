@@ -38,7 +38,7 @@ struct CardsPastas: View {
             
             
             if isEmpty{
-                Text("Pasta vázia")
+                Text("Pasta vazia")
                     .foregroundStyle(.gray)
             } else {
                 
@@ -62,12 +62,12 @@ struct CardsPastas: View {
                 }
             }
         }
-        .padding(30)
+        .padding(25)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(.white)
         .cornerRadius(40)
         .shadow(color: Color.black.opacity(0.12), radius: 25, x: 0, y: 15)
-        .padding(.horizontal)
+        //.padding(.horizontal)
     }
 }
 

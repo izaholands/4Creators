@@ -1,62 +1,73 @@
-//
-//  NavPastaOpen..swift
-//  Creators
-//
-//  Created by Academy on 10/06/26.
-//
-
 import SwiftUI
 
-//tela de detalhes quando clica na pasta
-struct NavPastaOpen_: View {
+struct NavPastaOpen: View {
+    
+    let folder: Folder
+    
+    @Binding var navigationDepth: Int
+    
+    @FetchRequest(
+        sortDescriptors: [
+            NSSortDescriptor(
+                keyPath: \Post.createdAt,
+                ascending: false
+            )
+        ]
+    )
+    private var posts: FetchedResults<Post>
+    
+    private var postsDaPasta: [Post] {
+        
+        posts.filter {
+            
+            $0.folder?.objectID == folder.objectID
+            
+        }
+    }
+    
     var body: some View {
-      
-            VStack{
-                ScrollView{
-                    VStack(spacing: 20) {
-                        Color.clear
-                            .frame(height: 10)
-                        ForEach(SearchProviderGRWM.all()){ pastaGRWM in
-                                CardsPastasGRWM(pastaGRWM: pastaGRWM)
+        
+        ScrollView {
+            
+            if postsDaPasta.isEmpty {
+                
+                VStack {
+                    
+                    Spacer()
+                    
+                    Text("Nenhuma publicação nesta pasta")
+                        .foregroundColor(.secondary)
+                    
+                    Spacer()
+                }
+                
+            } else {
+                
+                VStack(spacing: 12) {
+                    
+                    ForEach(postsDaPasta) { post in
+                        
+                        NavigationLink {
+                            
+                            NavDetailsPublication(post: post)
+                                .onAppear {
+                                    navigationDepth += 1
+                                }
+                                .onDisappear {
+                                    navigationDepth -= 1
+                                }
+                            
+                        } label: {
+                            
+                            Cards(post: post)
                             
                         }
+                        .buttonStyle(.plain)
                     }
                 }
+                .padding()
             }
-            //.navigationTitle("GRWM")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar(content: {
-                //titulo e icoone
-                ToolbarItem(placement: .principal){
-                    HStack(spacing: 4){
-                        Text("GRWM")
-                            
-                            .font(.system(size: 17, weight: .semibold))
-                        
-                      
-                    }
-                    
-                }
-                ToolbarItem(placement: .navigationBarTrailing){
-                    Button(action: {
-                        print("acao")
-                    }) {
-                        Image(systemName: "plus")
-                            .foregroundColor(.indigo)
-                    }
-                        
-                    
-                }
-            })
-
-            
-        
-        
-    }
-}
-
-struct NavPastaOpen__Previews: PreviewProvider {
-    static var previews: some View {
-        NavPastaOpen_()
+        }
+        .navigationTitle(folder.name ?? "Pasta")
     }
 }

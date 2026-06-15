@@ -103,7 +103,6 @@ struct Cards: View {
         .background(.white)
         .cornerRadius(40)
         .shadow(color: Color.black.opacity(0.12),radius: 25,x: 0,y: 15)
-        .padding(.horizontal)
     }
 }
 
