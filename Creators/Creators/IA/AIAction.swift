@@ -12,14 +12,14 @@ import Foundation
 enum AIAction: Decodable {
     case createPost(CreatePostPayload)
     case createFolder(CreateFolderPayload)
+    case answerQuestion(AnswerPayload)
     case unknown(reason: String)
 
-    // MARK: - Payloads
-
+    
     struct CreatePostPayload: Decodable {
         let title: String
         let plataform: String       // "instagram" | "tiktok" | "youtube"
-        let status: String         // "draft" | "scheduled" | "published"
+        let status: String         // posted | not_posted
         let script: String?
         let briefing: String?
         let folderName: String?
@@ -30,8 +30,10 @@ enum AIAction: Decodable {
     struct CreateFolderPayload: Decodable {
         let name: String
     }
-
-    // MARK: - Decodable manual (discriminated union via "action" field)
+    
+    struct AnswerPayload: Decodable {  // novo
+            let answer: String
+    }
 
     private enum CodingKeys: String, CodingKey {
         case action, payload, reason
@@ -42,12 +44,18 @@ enum AIAction: Decodable {
         let action = try container.decode(String.self, forKey: .action)
 
         switch action {
+        
         case "create_post":
             let payload = try container.decode(CreatePostPayload.self, forKey: .payload)
             self = .createPost(payload)
         case "create_folder":
             let payload = try container.decode(CreateFolderPayload.self, forKey: .payload)
             self = .createFolder(payload)
+        
+        case "answer_question":  // novo
+           let payload = try container.decode(AnswerPayload.self, forKey: .payload)
+           self = .answerQuestion(payload)
+       
         default:
             let reason = (try? container.decode(String.self, forKey: .reason)) ?? action
             self = .unknown(reason: reason)
