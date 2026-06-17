@@ -18,6 +18,7 @@
 		8410766B2FDB342300B7AA18 /* NavPastaOpen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8410766A2FDB342300B7AA18 /* NavPastaOpen.swift */; };
 		8410766F2FDB350300B7AA18 /* AISheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8410766E2FDB350300B7AA18 /* AISheetView.swift */; };
 		8441344C2FE06F25007C4438 /* NewFolderBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441344B2FE06F25007C4438 /* NewFolderBottomView.swift */; };
+		8441344E2FE08B82007C4438 /* TabBarVisibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441344D2FE08B82007C4438 /* TabBarVisibility.swift */; };
 		8461939B2FD9C67B00642AD1 /* FolderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8461939A2FD9C67B00642AD1 /* FolderListView.swift */; };
 		8461939D2FD9C93C00642AD1 /* FolderFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8461939C2FD9C93C00642AD1 /* FolderFormView.swift */; };
 		8461939F2FD9D7F800642AD1 /* PostFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8461939E2FD9D7F800642AD1 /* PostFormViewModel.swift */; };
@@ -59,6 +60,7 @@
 		8410766A2FDB342300B7AA18 /* NavPastaOpen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavPastaOpen.swift; sourceTree = "<group>"; };
 		8410766E2FDB350300B7AA18 /* AISheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AISheetView.swift; sourceTree = "<group>"; };
 		8441344B2FE06F25007C4438 /* NewFolderBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFolderBottomView.swift; sourceTree = "<group>"; };
+		8441344D2FE08B82007C4438 /* TabBarVisibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVisibility.swift; sourceTree = "<group>"; };
 		8461939A2FD9C67B00642AD1 /* FolderListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderListView.swift; sourceTree = "<group>"; };
 		8461939C2FD9C93C00642AD1 /* FolderFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderFormView.swift; sourceTree = "<group>"; };
 		8461939E2FD9D7F800642AD1 /* PostFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFormViewModel.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				8410765B2FDB31F200B7AA18 /* CardsPublis.swift */,
 				8410765D2FDB320100B7AA18 /* CardsPastas.swift */,
 				8410765F2FDB321B00B7AA18 /* CardsPastasGRWM.swift */,
+				8441344D2FE08B82007C4438 /* TabBarVisibility.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 				846193B12FD9F03E00642AD1 /* ProjectView.swift in Sources */,
 				8492EF7F2FD8B90C0053B995 /* PostStatus.swift in Sources */,
 				846193AB2FD9ED0E00642AD1 /* AIAction.swift in Sources */,
+				8441344E2FE08B82007C4438 /* TabBarVisibility.swift in Sources */,
 				841076632FDB33C700B7AA18 /* Search.swift in Sources */,
 				846193B32FD9F60B00642AD1 /* PostListView.swift in Sources */,
 				846193A62FD9EBBA00642AD1 /* WeekCalendarView.swift in Sources */,
@@ -468,9 +472,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Creators/Preview Content\"";
+				DEVELOPMENT_TEAM = J92K85A396;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Creators/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = 4Creators;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -498,9 +504,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Creators/Preview Content\"";
+				DEVELOPMENT_TEAM = J92K85A396;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Creators/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = 4Creators;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

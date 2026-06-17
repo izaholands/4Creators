@@ -141,7 +141,7 @@ REGRAS DO ROTEIRO (campo "script"):
   📋 Desenvolvimento: [3 a 5 tópicos principais]
   🎯 CTA: [inscrever, curtir, comentar]
 
-- O roteiro deve ser um ponto de partida, não um script completo.
+- Faça um roteiro bem estruturado e focado para o que o usuario quer. Se ele não falar nada, leve em consideração que é com a finalidade de ganhar seguidores.
 - Escreva em português, de forma direta e prática.
 - Se o usuário já informar partes do roteiro no comando, incorpore-as.
 """

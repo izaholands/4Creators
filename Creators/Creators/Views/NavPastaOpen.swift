@@ -4,8 +4,6 @@ struct NavPastaOpen: View {
     
     let folder: Folder
     
-    @Binding var navigationDepth: Int
-    
     @FetchRequest(
         sortDescriptors: [
             NSSortDescriptor(
@@ -47,20 +45,10 @@ struct NavPastaOpen: View {
                     
                     ForEach(postsDaPasta) { post in
                         
-                        NavigationLink {
-                            
-                            NavDetailsPublication(post: post)
-                                .onAppear {
-                                    navigationDepth += 1
-                                }
-                                .onDisappear {
-                                    navigationDepth -= 1
-                                }
-                            
-                        } label: {
-                            
+                        NavigationLink(destination: NavDetailsPublication(post: post)
+                            .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+                        ) {
                             Cards(post: post)
-                            
                         }
                         .buttonStyle(.plain)
                     }

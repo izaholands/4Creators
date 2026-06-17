@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct HomeView: View {
-    @Binding var navigationDepth: Int
     @State private var selectedDate: Date = Date()
     @State private var showAISheet = false
     
@@ -72,7 +71,7 @@ struct HomeView: View {
                         Text("Próximas publicações")
                             .font(.system(size: 22, weight: .bold))
 
-                        WeekCalendarView(selectedDate: $selectedDate)
+                       WeekCalendarView(selectedDate: $selectedDate)
 
                         Text(selectedDateLabel)
                             .font(.system(size: 15))
@@ -93,13 +92,11 @@ struct HomeView: View {
                             LazyVStack(spacing: 12) {
                                 ForEach(postForSelectedDate) { post in
                                     NavigationLink(destination: NavDetailsPublication(post: post)
-                                            .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
-                                            .onAppear { navigationDepth = 1 }
-                                            .onDisappear { navigationDepth = 0 }
-                                        ) {
-                                            Cards(post: post)
-                                        }
-                                        .buttonStyle(.plain)
+                                        .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+                                    ) {
+                                        Cards(post: post)
+                                    }
+                                    .buttonStyle(.plain)
                                 }
                             }
                         }

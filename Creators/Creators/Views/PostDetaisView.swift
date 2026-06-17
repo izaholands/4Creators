@@ -140,6 +140,7 @@ struct NavDetailsPublication: View {
             }
         }
         .padding()
+        .padding(.bottom, 83)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {

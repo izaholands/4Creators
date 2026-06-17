@@ -61,7 +61,7 @@ struct NewPostView: View {
                 HStack {
                     Button {
                         if postToEdit != nil {
-                            presentationMode.wrappedValue.dismiss()
+                           presentationMode.wrappedValue.dismiss()
                         } else {
                             selectedTab = 0
                         }
@@ -314,7 +314,7 @@ struct NewPostView: View {
                 .disabled(titleText.trimmingCharacters(in: .whitespaces).isEmpty)
                 .padding(.horizontal, 20)
                 .padding(.top, 12)
-                .padding(.bottom, 24)
+                .padding(.bottom, 70)
             }
 
             // Sheets de seleção (mantém o visual original)
@@ -373,6 +373,7 @@ struct NewPostView: View {
                isBriefingEnabled = !(post.briefing ?? "").isEmpty
         }
         .navigationBarHidden(true)
+        
     }
     
 

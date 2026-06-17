@@ -2,13 +2,9 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var selectedTab: Int = 0
-    @State private var navigationDepth : Int = 0
     @State private var showCreateMenu: Bool = false
     @State private var showNewFolderSheet: Bool = false
     
-    private var hideTabBar: Bool {
-        navigationDepth > 0
-    }
     let persistenceController = PersistenceController.shared
 
     var body: some View {
@@ -16,14 +12,14 @@ struct ContentView: View {
             
             // Conteúdo das abas
             Group {
-                if selectedTab == 0 { HomeView(navigationDepth: $navigationDepth) }
+                if selectedTab == 0 { HomeView() }
                 if selectedTab == 1 { NewPostView(selectedTab: $selectedTab)}
-                if selectedTab == 2 { NavPublications(navigationDepth: $navigationDepth) }
+                if selectedTab == 2 { NavPublications() }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
 
             // Tab bar customizada
-            if selectedTab != 1  && !hideTabBar{
+            if selectedTab != 1 {
                 customTabBar
             }
            
@@ -94,8 +90,10 @@ struct ContentView: View {
                 .transition(.move(edge: .bottom))
                 .zIndex(11)
             }
+            
         }
         .ignoresSafeArea(edges: .bottom)
+       
     }
 
     private var customTabBar: some View {

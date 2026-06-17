@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct NavPublications: View {
-    @Binding var navigationDepth: Int
-    
     enum TipoConteudo: String, CaseIterable {
         case publicacoes = "Publicações"
         case pastas = "Pastas"
@@ -63,8 +61,7 @@ struct NavPublications: View {
     )
     private var folders: FetchedResults<Folder>
     
-    init(navigationDepth: Binding<Int>) {
-        self._navigationDepth = navigationDepth
+    init() {
         UIScrollView.appearance().backgroundColor = .white
     }
 //    
@@ -153,13 +150,11 @@ struct NavPublications: View {
                                     ($0.title ?? "").localizedCaseInsensitiveContains(searchText)
                                 }) { post in
                                     NavigationLink(destination: NavDetailsPublication(post: post)
-                                            .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
-                                            .onAppear { navigationDepth = 1 }
-                                            .onDisappear { navigationDepth = 0 }
-                                        ) {
-                                            Cards(post: post)
-                                        }
-                                        .buttonStyle(.plain)                                }
+                                        .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+                                    ) {
+                                        Cards(post: post)
+                                    }
+                                    .buttonStyle(.plain)}
                             }
                             //exibe a tela de pastas
                         case .pastas:
@@ -176,19 +171,13 @@ struct NavPublications: View {
                                     ($0.name ?? "").localizedCaseInsensitiveContains(searchText)
                                 }) { folder in
                                     
+                                    // pastas — depois:
                                     NavigationLink {
-
-                                            NavPastaOpen(
-                                                folder: folder,
-                                                navigationDepth: $navigationDepth
-                                            )
-
-                                        } label: {
-
-                                            CardsPastas(folder: folder)
-
-                                        }
-                                        .buttonStyle(.plain)
+                                        NavPastaOpen(folder: folder)
+                                    } label: {
+                                        CardsPastas(folder: folder)
+                                    }
+                                    .buttonStyle(.plain)
                                     
                                 
                                 }
