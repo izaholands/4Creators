@@ -144,6 +144,8 @@ struct NavPublications: View {
                         case .publicacoes:
                             if posts.isEmpty {
                                 Text("Nenhum post encontrado")
+                                    .foregroundColor(.secondary)
+                                    .padding(.top, 40)
                             } else {
                                 ForEach(posts.filter {
                                     searchText.isEmpty ||
@@ -159,8 +161,6 @@ struct NavPublications: View {
                             //exibe a tela de pastas
                         case .pastas:
                             if folders.isEmpty {
-                                
-                                
                                 Text("Nenhuma pasta encontrada")
                                     .foregroundColor(.secondary)
                                     .padding(.top, 40)

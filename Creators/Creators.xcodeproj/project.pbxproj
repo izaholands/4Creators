@@ -40,6 +40,7 @@
 		8492EF7D2FD8B78D0053B995 /* Plataform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8492EF7C2FD8B78D0053B995 /* Plataform.swift */; };
 		8492EF7F2FD8B90C0053B995 /* PostStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8492EF7E2FD8B90C0053B995 /* PostStatus.swift */; };
 		8492EF812FD8BDFF0053B995 /* PostFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8492EF802FD8BDFF0053B995 /* PostFormView.swift */; };
+		9F3F25ED2FE314A9007B7F58 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3F25EC2FE314A9007B7F58 /* NotificationManager.swift */; };
 		9FAA74CC2FD90B8600AC806E /* CreatorsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAA74CB2FD90B8600AC806E /* CreatorsApp.swift */; };
 		9FAA74CE2FD90B8600AC806E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAA74CD2FD90B8600AC806E /* ContentView.swift */; };
 		9FAA74D02FD90B8900AC806E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FAA74CF2FD90B8900AC806E /* Assets.xcassets */; };
@@ -82,6 +83,8 @@
 		8492EF7C2FD8B78D0053B995 /* Plataform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plataform.swift; sourceTree = "<group>"; };
 		8492EF7E2FD8B90C0053B995 /* PostStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStatus.swift; sourceTree = "<group>"; };
 		8492EF802FD8BDFF0053B995 /* PostFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFormView.swift; sourceTree = "<group>"; };
+		9F3F25EC2FE314A9007B7F58 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		9F3F25EE2FE3202B007B7F58 /* Creators.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Creators.entitlements; sourceTree = "<group>"; };
 		9FAA74C82FD90B8600AC806E /* Creators.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Creators.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FAA74CB2FD90B8600AC806E /* CreatorsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatorsApp.swift; sourceTree = "<group>"; };
 		9FAA74CD2FD90B8600AC806E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -105,6 +108,7 @@
 			children = (
 				8410765B2FDB31F200B7AA18 /* CardsPublis.swift */,
 				8410765D2FDB320100B7AA18 /* CardsPastas.swift */,
+				9F3F25EC2FE314A9007B7F58 /* NotificationManager.swift */,
 				8410765F2FDB321B00B7AA18 /* CardsPastasGRWM.swift */,
 				8441344D2FE08B82007C4438 /* TabBarVisibility.swift */,
 			);
@@ -209,6 +213,7 @@
 		9FAA74CA2FD90B8600AC806E /* Creators */ = {
 			isa = PBXGroup;
 			children = (
+				9F3F25EE2FE3202B007B7F58 /* Creators.entitlements */,
 				841076612FDB33B800B7AA18 /* Data */,
 				8410765A2FDB31C600B7AA18 /* Components */,
 				841076592FDB200C00B7AA18 /* Info.plist */,
@@ -334,6 +339,7 @@
 				8492EF7B2FD8AB260053B995 /* PersistenceController.swift in Sources */,
 				8410765E2FDB320100B7AA18 /* CardsPastas.swift in Sources */,
 				846193B52FD9F6C800642AD1 /* NewPostView.swift in Sources */,
+				9F3F25ED2FE314A9007B7F58 /* NotificationManager.swift in Sources */,
 				846389D62FDC46370052E5A5 /* Utils.swift in Sources */,
 				8410766B2FDB342300B7AA18 /* NavPastaOpen.swift in Sources */,
 				841076672FDB33EF00B7AA18 /* PastasGRWM.swift in Sources */,
@@ -469,6 +475,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Creators/Creators.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Creators/Preview Content\"";
@@ -501,6 +508,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Creators/Creators.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Creators/Preview Content\"";

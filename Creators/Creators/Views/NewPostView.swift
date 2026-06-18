@@ -395,6 +395,12 @@ struct NewPostView: View {
 
         do {
             try postService.save(context: context)
+            
+            if publishDate > Date() {
+                // Aqui usamos um ID temporário, mas o ideal seria usar o ID do post criado
+                NotificationManager.schedule(title: titleText, date: publishDate, identifier: UUID())
+            }
+            
             selectedTab = 0
         } catch {
             errorMessage = error.localizedDescription
@@ -422,6 +428,11 @@ struct NewPostView: View {
         guard let post = postToEdit else {return}
         let publishedDate = combineDateAndTime(date: selectedDate, time: selectedTime)
         
+        // CANCELAR A ANTIGA ANTES DE ATUALIZAR
+        if let id = post.id {
+            NotificationManager.cancel(identifier: id)
+        }
+        
         postService.updatePost(
             post,
             title: titleText.trimmingCharacters(in: .whitespaces),
@@ -437,6 +448,12 @@ struct NewPostView: View {
         do {
             
             try postService.save(context: context)
+            
+            // AGENDAR A NOVA
+            if publishedDate > Date() {
+                NotificationManager.schedule(title: titleText, date: publishedDate, identifier: post.id ?? UUID())
+            }
+            
             presentationMode.wrappedValue.dismiss()
             
         } catch {

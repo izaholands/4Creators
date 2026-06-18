@@ -1,13 +1,6 @@
-//
-//  PostFormViewModel.swift
-//  Creators
-//
-//  Created by admin on 10/06/26.
-//
-
 import Foundation
 import CoreData
-
+import UserNotifications
 
 final class PostFormViewModel: ObservableObject {
     
@@ -26,7 +19,6 @@ final class PostFormViewModel: ObservableObject {
     }
     
     func load(post: Post){
-        
         title = post.title ?? ""
         script = post.script ?? ""
         selectedPlataform = Plataform(rawValue: post.plataform ?? "") ?? .instagram
@@ -34,19 +26,23 @@ final class PostFormViewModel: ObservableObject {
         publishDate = post.publishDate ?? Date()
         briefing = post.briefing ?? ""
         selectedFolder = post.folder
-        
     }
     
     func save(context: NSManagedObjectContext, post: Post?) {
-
         let currentPost: Post
-        if let post {
+        let postID: UUID
+        
+        if let post = post {
             currentPost = post
+            postID = post.id ?? UUID()
+            NotificationManager.cancel(identifier: postID)
         } else {
             currentPost = Post(context: context)
-            currentPost.id = UUID()
+            postID = UUID()
+            currentPost.id = postID
             currentPost.createdAt = Date()
         }
+        
         currentPost.title = title
         currentPost.script = script
         currentPost.plataform = selectedPlataform.rawValue
@@ -56,9 +52,19 @@ final class PostFormViewModel: ObservableObject {
         currentPost.folder = selectedFolder
         
         try? context.save()
+        print("salvando o post")
+        
+        print("publish date: \(publishDate)")
+        if publishDate > Date() {
+            print("entrei no if")
+            NotificationManager.schedule(title: title, date: publishDate, identifier: postID)
+            // Chamada de verificação
+            NotificationManager.verificarAgendadas()
+        }
     }
     
     func createPost(context: NSManagedObjectContext) {
+        let newPostID = UUID()
 
         service.createPost(
             title: title,
@@ -72,6 +78,11 @@ final class PostFormViewModel: ObservableObject {
         )
 
         try? service.save(context: context)
+        print("to aqui no create post")
+        if publishDate > Date() {
+            NotificationManager.schedule(title: title, date: publishDate, identifier: newPostID)
+            
+            NotificationManager.verificarAgendadas()
+        }
     }
-    
 }

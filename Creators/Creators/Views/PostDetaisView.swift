@@ -1,8 +1,8 @@
 import SwiftUI
+import CoreData
 
 struct NavDetailsPublication: View {
     let post: Post
-    
 
     @Environment(\.managedObjectContext) private var context
     @Environment(\.dismiss) private var dismiss
@@ -12,17 +12,10 @@ struct NavDetailsPublication: View {
 
     private let postService = PostService()
 
-    private var statusIcone: String {
-        post.status == PostStatus.posted.rawValue ? "arrow.up.circle" : "arrow.up.circle"
-    }
-
-    private var statusCor: Color {
-        post.status == PostStatus.posted.rawValue ? .green : .red
-    }
-
-    private var statusTexto: String {
-        post.status == PostStatus.posted.rawValue ? "Postado" : "Não postado"
-    }
+    // Variáveis auxiliares de formatação
+    private var statusIcone: String { "arrow.up.circle" }
+    private var statusCor: Color { post.status == PostStatus.posted.rawValue ? .green : .red }
+    private var statusTexto: String { post.status == PostStatus.posted.rawValue ? "Postado" : "Não postado" }
 
     private var dataHora: String {
         guard let date = post.publishDate else { return "Sem data" }
@@ -33,114 +26,89 @@ struct NavDetailsPublication: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Divider()
-
-            ScrollView {
-                VStack(alignment: .leading, spacing: 16) {
-
-                    // Título
+        ZStack(alignment: .bottom) {
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading, spacing: 20) {
+                    
+                    // Título ajustado para subir um pouco
                     Text(post.title ?? "Sem título")
                         .font(.system(size: 28, weight: .bold))
+                        .padding(.top, -10)
 
-                    // Status
-                    HStack {
-                        Image(systemName: statusIcone)
-                            .font(.system(size: 20))
-                            .foregroundColor(statusCor)
-                        Text(statusTexto)
+                    // Grupo de Status, Data, Plataforma com alinhamento fixo
+                    VStack(alignment: .leading, spacing: 14) {
+                        HStack(spacing: 12) {
+                            Image(systemName: statusIcone).foregroundColor(statusCor).frame(width: 20)
+                            Text(statusTexto)
+                        }
+                        HStack(spacing: 12) {
+                            Image(systemName: "calendar.badge.clock").foregroundColor(.indigo).frame(width: 20)
+                            Text(dataHora).font(.system(size: 15))
+                        }
+                        HStack(spacing: 12) {
+                            Image(systemName: "video.fill").foregroundColor(.indigo).frame(width: 20)
+                            Text(post.plataform ?? "").font(.system(size: 16, weight: .bold))
+                        }
                     }
 
-                    // Data
-                    HStack(spacing: 16) {
-                        Image(systemName: "calendar.badge.clock")
-                            .font(.system(size: 20))
-                            .foregroundColor(.indigo)
-                        Text(dataHora)
-                            .font(.system(size: 15))
-                    }
-
-                    // Plataforma
-                    HStack(spacing: 16) {
-                        Image(systemName: "video.fill")
-                            .font(.system(size: 20))
-                            .foregroundColor(.indigo)
-                        Text(post.plataform ?? "")
-                            .font(.system(size: 16, weight: .bold))
-                    }
-
-                    // Pasta
+                    // Pasta (se existir)
                     if let folder = post.folder {
                         HStack {
                             Text("Pasta")
                             Spacer()
                             HStack(spacing: 8) {
                                 Text(folder.name ?? "")
-                                    .foregroundColor(.gray)
                                 Image(systemName: "chevron.right")
-                                    .foregroundColor(.gray.opacity(0.6))
                             }
+                            .foregroundColor(.gray)
                         }
                         .padding()
-                        .background(Color(.systemBackground))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
-                        )
+                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.2), lineWidth: 1))
                     }
 
                     // Roteiro
                     if let script = post.script, !script.isEmpty {
                         VStack(alignment: .leading, spacing: 8) {
-                            Text("Roteiro")
-                                .font(.system(size: 20, weight: .semibold))
-                            Text(script)
-                                .lineLimit(exibirTudoRoteiro ? nil : 4)
-                            Button(exibirTudoRoteiro ? "Ver menos" : "Ver mais") {
-                                withAnimation { exibirTudoRoteiro.toggle() }
-                            }
-                            .foregroundColor(.indigo)
+                            Text("Roteiro").font(.system(size: 20, weight: .semibold))
+                            Text(script).lineLimit(exibirTudoRoteiro ? nil : 4)
+                            Button(exibirTudoRoteiro ? "Ver menos" : "Ver mais") { withAnimation { exibirTudoRoteiro.toggle() } }
+                                .foregroundColor(.indigo)
                         }
                     }
 
                     // Briefing
                     if let briefing = post.briefing, !briefing.isEmpty {
                         VStack(alignment: .leading, spacing: 8) {
-                            Text("Briefing")
-                                .font(.system(size: 20, weight: .semibold))
-                            Text(briefing)
-                                .lineLimit(exibirTudoBriefing ? nil : 4)
-                            Button(exibirTudoBriefing ? "Ver menos" : "Ver mais") {
-                                withAnimation { exibirTudoBriefing.toggle() }
-                            }
-                            .foregroundColor(.indigo)
+                            Text("Briefing").font(.system(size: 20, weight: .semibold))
+                            Text(briefing).lineLimit(exibirTudoBriefing ? nil : 4)
+                            Button(exibirTudoBriefing ? "Ver menos" : "Ver mais") { withAnimation { exibirTudoBriefing.toggle() } }
+                                .foregroundColor(.indigo)
                         }
                     }
-
-                    Spacer()
+                    
+                    // Espaçamento para o conteúdo não ficar atrás do botão
+                    Color.clear.frame(height: 80)
                 }
-                .padding(.bottom, 100)
+                .padding(.horizontal, 20)
+                .padding(.top, 20)
             }
-            .safeAreaInset(edge: .bottom) {
-                // Botão postado — só aparece se ainda não postado
-                if post.status != PostStatus.posted.rawValue {
-                    Button {
-                        marcarComoPostado()
-                    } label: {
-                        Text("Vídeo postado")
-                            .foregroundColor(.white)
-                            .font(.system(size: 17))
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.indigo)
-                            .cornerRadius(12)
-                    }
-                    .padding()
+
+            // Botão fixo na base
+            if post.status != PostStatus.posted.rawValue {
+                Button { marcarComoPostado() } label: {
+                    Text("Postado")
+                        .foregroundColor(.white)
+                        .font(.system(size: 17, weight: .semibold))
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 54)
+                        .background(Color.indigo)
+                        .cornerRadius(12)
                 }
+                .padding(.horizontal, 20)
+                .padding(.bottom, 80)
+                .background(Color.white.ignoresSafeArea())
             }
         }
-        .padding()
-        .padding(.bottom, 83)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -154,14 +122,12 @@ struct NavDetailsPublication: View {
         }
     }
 
-    // MARK: - Actions
-
     private func marcarComoPostado() {
         postService.updatePost(
             post,
             title: post.title ?? "",
             script: post.script ?? "",
-            plataform: Plataform(rawValue: post.plataform ?? "") ?? .tiktok,
+            plataform: Plataform(rawValue: post.plataform ?? "") ?? .instagram,
             status: .posted,
             publishDate: post.publishDate,
             briefing: post.briefing,
